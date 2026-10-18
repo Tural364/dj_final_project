@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block content %}<div class="auth-card"><h1 class="h3">Request a session</h1><p class="text-muted">Offer: {{ offer.title }} · Mentor: {{ offer.owner.username }}</p><form method="post">{% csrf_token %}{{ form.as_p }}<button class="btn btn-success">Send request</button></form></div>{% endblock %}

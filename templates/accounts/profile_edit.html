@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block content %}<div class="auth-card"><h1 class="h2">Edit profile</h1><form method="post" enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}<button class="btn btn-success">Save profile</button></form></div>{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<div class="profile-header p-4 mb-4">{% if person.avatar %}<img class="avatar" src="{{ person.avatar.url }}" alt="Avatar">{% else %}<div class="avatar avatar-placeholder">{{ person.username|first|upper }}</div>{% endif %}<div class="flex-grow-1"><h1 class="h2 mb-1">{{ person.username }}</h1><p class="mb-2">{{ person.bio|default:"This member hasn't added a bio yet." }}</p><div class="small text-muted">★ {{ rating|default:"—"|floatformat:1 }} average rating · {{ offers|length }} published offers · {{ completed_count }} completed sessions</div></div>
+{% if user == person %}<a class="btn btn-outline-dark" href="{% url 'accounts:profile_edit' %}">Edit profile</a>{% endif %}</div>
+{% if user.is_superuser or user.role == "super_admin" %}<form method="post" action="{% url 'accounts:toggle_block' person.pk %}" class="mb-3">{% csrf_token %}<button class="btn btn-outline-danger">{% if person.is_blocked %}Unblock user{% else %}Block user{% endif %}</button></form>{% endif %}
+<h2 class="h3 mb-3">Published offers</h2>{% include "offers/_offer_cards.html" with offers=offers %}
+<h2 class="h3 mt-5 mb-3">Reviews</h2>{% for review in reviews %}<div class="review-item mb-3"><strong>{{ review.author.username }}</strong> · {{ review.rating }}/5 <p class="mb-0">{{ review.comment }}</p></div>{% empty %}<p class="text-muted">No reviews yet.</p>{% endfor %}
+{% endblock %}
